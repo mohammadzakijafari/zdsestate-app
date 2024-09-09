@@ -50,37 +50,15 @@ const login = async (req, res) => {
 
     // Search a user with the provided information
     let oldUser = await User.findOne({ email: email }).select("+password");
-<<<<<<< HEAD
-    console.log(oldUser);
-    if (!oldUser) {
-      return res.status(400).send({
-        msg: "User not found please register first!",
-=======
     if (!oldUser) {
       return res.status(400).send({
         msg: "User not found, please register first!",
->>>>>>> 5ade910e06be2e9413398ec4d201577f51fc16a9
       });
     }
 
     //   Compare the hashed password with the entered password
     let isPasswordValid = await bcrypt.compare(password, oldUser.password);
     if (!isPasswordValid)
-<<<<<<< HEAD
-      return res.send({ msg: "Wrong password please try again!" });
-
-    // Generate the token using JWT
-    let payload = {
-      id: oldUser._id,
-      email: oldUser.email,
-    };
-
-    // sign
-    // secrete key
-    let token = await jwt.sign(payload, JWT_SECRET); // we can also add expiration time {expiresIn: "1hr"}
-
-    res.send({ msg: "Login Successfully, Welcome.", token });
-=======
       return res.status(400).send({ msg: "Wrong password please try again!" });
 
     // Retrieve user details without the password
@@ -117,7 +95,6 @@ const login = async (req, res) => {
     //     email: oldUser.email,
     //   },
     // });
->>>>>>> 5ade910e06be2e9413398ec4d201577f51fc16a9
   } catch (error) {
     return res
       .status(500)
