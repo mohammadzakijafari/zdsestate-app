@@ -13,18 +13,6 @@ const PORT = process.env.PORT || 4040;
 //------------------middleware-----------------------------------
 app.use(express.json());
 app.use(cors());
-<<<<<<< HEAD
-=======
-// app.use(express.static('public'))  // when deploying to netlify
-
-// If we are using cookies for the token
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // Your frontend URL
-//     credentials: true, // Allow credentials (cookies)
-//   })
-// );
->>>>>>> 5ade910e06be2e9413398ec4d201577f51fc16a9
 
 //------------------DB Connection---------------------------------
 dbConnection();
