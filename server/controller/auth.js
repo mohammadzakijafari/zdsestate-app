@@ -50,16 +50,23 @@ const login = async (req, res) => {
 
     // Search a user with the provided information
     let oldUser = await User.findOne({ email: email }).select("+password");
+<<<<<<< HEAD
     console.log(oldUser);
     if (!oldUser) {
       return res.status(400).send({
         msg: "User not found please register first!",
+=======
+    if (!oldUser) {
+      return res.status(400).send({
+        msg: "User not found, please register first!",
+>>>>>>> 5ade910e06be2e9413398ec4d201577f51fc16a9
       });
     }
 
     //   Compare the hashed password with the entered password
     let isPasswordValid = await bcrypt.compare(password, oldUser.password);
     if (!isPasswordValid)
+<<<<<<< HEAD
       return res.send({ msg: "Wrong password please try again!" });
 
     // Generate the token using JWT
@@ -73,6 +80,44 @@ const login = async (req, res) => {
     let token = await jwt.sign(payload, JWT_SECRET); // we can also add expiration time {expiresIn: "1hr"}
 
     res.send({ msg: "Login Successfully, Welcome.", token });
+=======
+      return res.status(400).send({ msg: "Wrong password please try again!" });
+
+    // Retrieve user details without the password
+    let currentUser = await User.findById(oldUser._id).select("-password");
+    // console.log(currentUser);
+    let payload = { currentUser };
+
+    // Generate the token using JWT by signing
+    // secrete key
+    let token = jwt.sign(payload, JWT_SECRET); // we can also add expiration time {expiresIn: "1hr"}
+
+    res.status(200).send({
+      msg: `Login Successfully, Welcome ${oldUser.fullName}.`,
+      userInfo: {
+        token,
+        payload: payload.currentUser,
+      },
+    });
+
+    // // OR Set the token as an HTTP-only cookie / but we also need to modify our server.js app.use(cors({}))
+    // res.cookie("access_token", token, {
+    //   httpOnly: true,
+    //   secure: false, //process.env.NODE_ENV === 'production', // Set this to false in development if you're not using HTTPS locally
+    //   sameSite: "lax", // Allow cross-site cookies for navigation (use "strict" in production)
+    //   maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
+    // });
+
+    // // After sending the cookie Send response to the front end
+    // res.status(200).send({
+    //   msg: `Login Successfully, Welcome ${oldUser.fullName}.`,
+    //   user: {
+    //     id: oldUser._id,
+    //     fullName: oldUser.fullName,
+    //     email: oldUser.email,
+    //   },
+    // });
+>>>>>>> 5ade910e06be2e9413398ec4d201577f51fc16a9
   } catch (error) {
     return res
       .status(500)
