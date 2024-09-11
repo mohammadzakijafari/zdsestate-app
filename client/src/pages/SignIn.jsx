@@ -78,6 +78,8 @@ function SignIn() {
   useEffect(() => {
     if (authTokenSignal.get()) {
       navigate("/listings");
+    } else {
+      console.log("No Signal");
     }
   }, []);
 

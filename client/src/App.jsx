@@ -6,7 +6,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PageNotFound from "./pages/PageNotFound";
 import Header from "./components/Shared/Header";
-import ProtectedRoute from "./utils/ProtectedRoute";
+import ProtectedRoute from './utils/ProtectedRoute'
 import Listings from "./pages/Listings";
 
 const App = () => (
@@ -15,7 +15,7 @@ const App = () => (
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route element={<ProtectedRoute />}>
+        <Route element={ <ProtectedRoute /> }>
           <Route path="/listings" element={<Listings />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
